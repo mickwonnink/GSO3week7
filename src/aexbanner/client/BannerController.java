@@ -1,5 +1,7 @@
 package aexbanner.client;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.rmi.RemoteException;
 import server.MockEffectenbeurs;
 import shared.IEffectenbeurs;
@@ -17,7 +19,14 @@ public class BannerController {
 
     public BannerController(AEXBanner banner) {
 
-        this.RMIC = new RMIClient("192.168.1.126", 1099);
+        try {
+        InetAddress localhost = InetAddress.getLocalHost();       
+        this.RMIC = new RMIClient(localhost.getHostAddress(), 1099);
+        }
+        catch (UnknownHostException e){
+            e.printStackTrace();
+        }
+        
         this.banner = banner;
         try{
         this.effectenbeurs = new MockEffectenbeurs();
