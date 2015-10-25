@@ -1,6 +1,6 @@
 package shared;
 
-public interface IFonds {
+public interface IFonds{
 
 	String getNaam();
 

@@ -1,5 +1,8 @@
 package server;
 
+import java.io.Serializable;
+import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
 import shared.Fonds;
 import shared.IEffectenbeurs;
 import shared.IFonds;
@@ -10,18 +13,18 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.Random;
 
-public class MockEffectenbeurs implements IEffectenbeurs {
+public class MockEffectenbeurs extends UnicastRemoteObject implements IEffectenbeurs, Serializable {
 
     private List<IFonds> fondsList = new ArrayList<>();
     private Timer timer = new Timer();
-    public MockEffectenbeurs() {
+    public MockEffectenbeurs() throws RemoteException  {
         for (String name : Arrays.asList("Mick", "Igor", "Fontys", "GSO", "AEX", "Banner")) {
             fondsList.add(new Fonds(name));
         }
         Simulate();
     }
 
-    public void Simulate() {
+    public void Simulate() throws RemoteException {
         (timer).schedule(new TimerTask() {
 
             @Override
@@ -36,11 +39,11 @@ public class MockEffectenbeurs implements IEffectenbeurs {
     }
 
     @Override
-    public List<IFonds> getKoersen() {
+    public List<IFonds> getKoersen() throws RemoteException {
         return fondsList;
     }
 
-    public void stop() {
+    public void stop() throws RemoteException {
         timer.cancel();
     }
    
