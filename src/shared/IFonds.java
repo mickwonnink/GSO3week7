@@ -1,6 +1,8 @@
 package shared;
 
-public interface IFonds{
+import java.io.Serializable;
+
+public interface IFonds  {
 
 	String getNaam();
 

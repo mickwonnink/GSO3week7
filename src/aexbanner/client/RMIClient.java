@@ -51,10 +51,6 @@ public class RMIClient {
             System.out.println("Client: Registry is null pointer");
         }
 
-        // Print contents of registry
-        if (registry != null) {
-            printContentsRegistry();
-        }
 
         // Bind student administration using registry
         if (registry != null) {
@@ -80,11 +76,11 @@ public class RMIClient {
 
         // Test RMI connection
         if (effectBeurs != null) {
-            testStudentAdministration();
+            testEffectenBeurs();
         }
     }
     
-    public List<IFonds> GetKoersenn(){
+    public List<IFonds> GetKoersen(){
         try {
         return effectBeurs.getKoersen();
         }
@@ -93,26 +89,9 @@ public class RMIClient {
         return null;
     }
 
-    // Print contents of registry
-    private void printContentsRegistry() {
-        try {
-            String[] listOfNames = registry.list();
-            System.out.println("Client: list of names bound in registry:");
-            if (listOfNames.length != 0) {
-                for (String s : registry.list()) {
-                    System.out.println(s);
-                }
-            } else {
-                System.out.println("Client: list of names bound in registry is empty");
-            }
-        } catch (RemoteException ex) {
-            System.out.println("Client: Cannot show list of names bound in registry");
-            System.out.println("Client: RemoteException: " + ex.getMessage());
-        }
-    }
 
     // Test RMI connection
-    private void testStudentAdministration() {
+    private void testEffectenBeurs() {
         
         //Get amount of fonds
         try {

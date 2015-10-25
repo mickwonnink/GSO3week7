@@ -17,7 +17,7 @@ public class BannerController {
 
     public BannerController(AEXBanner banner) {
 
-        this.RMIC = new RMIClient("192.168.178.20", 1099);
+        this.RMIC = new RMIClient("192.168.1.126", 1099);
         this.banner = banner;
         try{
         this.effectenbeurs = new MockEffectenbeurs();
@@ -32,7 +32,7 @@ public class BannerController {
             public void run() {
                 
                 String s = "";
-                for (IFonds eb : RMIC.GetKoersenn()) {
+                for (IFonds eb : RMIC.GetKoersen()) {
                     s = s + " " + eb.getNaam() + " "+  eb.getKoers();
                 }
                 final String fs = s;
