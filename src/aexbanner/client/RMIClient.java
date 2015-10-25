@@ -83,6 +83,15 @@ public class RMIClient {
             testStudentAdministration();
         }
     }
+    
+    public List<IFonds> GetKoersenn(){
+        try {
+        return effectBeurs.getKoersen();
+        }
+        catch (RemoteException e){
+        }
+        return null;
+    }
 
     // Print contents of registry
     private void printContentsRegistry() {

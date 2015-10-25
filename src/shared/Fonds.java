@@ -25,8 +25,7 @@ public class Fonds implements IFonds, Serializable {
     }
     
     public void randomKoers()
-    {
-        
+    {      
         koers = (double)Math.round((Math.random() * 100) * 1000d) / 1000d;
     }
     

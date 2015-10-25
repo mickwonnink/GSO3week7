@@ -1,5 +1,6 @@
 package aexbanner.client;
 
+import java.rmi.RemoteException;
 import server.MockEffectenbeurs;
 import shared.IEffectenbeurs;
 import java.util.Timer;
@@ -12,19 +13,26 @@ public class BannerController {
     private AEXBanner banner;
     private IEffectenbeurs effectenbeurs;
     private Timer pollingTimer;
+    private RMIClient RMIC;
 
     public BannerController(AEXBanner banner) {
 
+        this.RMIC = new RMIClient("192.168.178.20", 1099);
         this.banner = banner;
+        try{
         this.effectenbeurs = new MockEffectenbeurs();
+        }
+        catch (RemoteException e){
+        }
 
         // Start polling timer: update banner every two seconds
         pollingTimer = new Timer();
         pollingTimer.schedule(new TimerTask() {
             @Override
             public void run() {
+                
                 String s = "";
-                for (IFonds eb : effectenbeurs.getKoersen()) {
+                for (IFonds eb : RMIC.GetKoersenn()) {
                     s = s + " " + eb.getNaam() + " "+  eb.getKoers();
                 }
                 final String fs = s;
@@ -34,6 +42,7 @@ public class BannerController {
                     banner.setKoersen(fs);
                 }
             });
+                
             }
         }, 0, 2000);
     }
@@ -43,6 +52,11 @@ public class BannerController {
         pollingTimer.cancel();
         // Stop simulation timer of effectenbeurs
         // TODO
+        try {
         ((MockEffectenbeurs) effectenbeurs).stop();
+        }
+        catch (RemoteException e){
+            
+        }
     }
 }
